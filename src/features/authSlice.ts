@@ -6,6 +6,10 @@ interface AuthState {
         email: string;
         password: string;
     };
+    resetFormData: {
+        newPassword: string;
+        confirmPassword: string;
+    };
     otp: string[];
 }
 
@@ -13,6 +17,10 @@ const initialState: AuthState = {
     formData: {
         email: "",
         password: "",
+    },
+    resetFormData: {
+        newPassword: "",
+        confirmPassword: "",
     },
     otp: new Array(6).fill(""),
 };
@@ -31,7 +39,7 @@ export const loginForm = createAsyncThunk(
 
 export const verifyOtpForm = createAsyncThunk(
     "verifyOtp",
-    async (data:  { email: string; otp: string }, { rejectWithValue }) => {
+    async (data: { email: string; otp: string }, { rejectWithValue }) => {
         try {
             const response = await verifyOtp(data);
             return response?.data;
@@ -41,8 +49,6 @@ export const verifyOtpForm = createAsyncThunk(
     }
 );
 
-
-
 const AuthSlice = createSlice({
     name: "login",
     initialState,
@@ -51,6 +57,13 @@ const AuthSlice = createSlice({
             const { key, value } = action.payload;
             state.formData = {
                 ...state?.formData,
+                [key]: value,
+            };
+        },
+        setResetFormData: (state, action) => {
+            const { key, value } = action.payload;
+            state.resetFormData = {
+                ...state?.resetFormData,
                 [key]: value,
             };
         },
@@ -67,5 +80,5 @@ const AuthSlice = createSlice({
     },
 });
 
-export const { setFormData, setOTPCode, clearFormData } = AuthSlice.actions;
+export const { setFormData, setResetFormData, setOTPCode, clearFormData } = AuthSlice.actions;
 export default AuthSlice.reducer;

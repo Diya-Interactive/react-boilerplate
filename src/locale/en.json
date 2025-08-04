@@ -23,5 +23,11 @@
     "enter_your_email_to_search_for_your_account": "Please enter your email address to search for your account.",
     "search": "Search",
     "cancel": "Cancel",
-    "register_to_account": "Register to your account"
+    "register_to_account": "Register to your account",
+    "new_passowrd": "New passowrd",
+    "enter_new_passowrd": "Enter new password",
+    "confrim_password": "Confirm password",
+    "enter_confirm_password": "Enter confirm password",
+    "create_new_password": "Create new password",
+    "enter_new_password_to_update_your_account": "Enter new password to update your account."
 }
