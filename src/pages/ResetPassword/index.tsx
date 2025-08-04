@@ -9,6 +9,7 @@ import logoLight from "../../assets/images/logo-light.png";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { clearResetFormData, setResetFormData } from "../../features/authSlice";
 import { getErrorMessage } from "../../utils/globalFunctions";
+import useLoader from "../../hooks/useLoader";
 
 const ResetPassword: React.FC = () => {
     const { t } = useTranslation();
@@ -16,35 +17,45 @@ const ResetPassword: React.FC = () => {
 
     const inputConfirmPassword = useRef<HTMLInputElement>(null);
 
-    const { resetFormData } = useAppSelector((state) => state.login);
+    const { resetPasswordFormData } = useAppSelector((state) => state.login);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { showToast } = useToast();
+    const { showLoader, hideLoader } = useLoader();
 
     const handleChange = (value: string, name: string) => {
         dispatch(setResetFormData({ key: name, value }));
     };
 
+    const validatePassword = () => {
+        if (
+            resetPasswordFormData.newPassword.length > 0 &&
+            resetPasswordFormData.confirmPassword.length > 0 &&
+            resetPasswordFormData.newPassword !==
+            resetPasswordFormData.confirmPassword
+        ) {
+            setError(true);
+            inputConfirmPassword?.current?.focus();
+            showToast("Passwords do not match", "error");
+            return true;
+        }
+        return false;
+    };
+
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError(false);
-        if (
-            resetFormData.newPassword.length > 0 &&
-            resetFormData.confirmPassword.length > 0 &&
-            resetFormData.newPassword !== resetFormData.confirmPassword
-        ) {
-            setError(true);
-            showToast("Passwords do not match", "error");
-            inputConfirmPassword?.current?.focus();
-            return;
-        }
+        if (validatePassword()) return;
+        showLoader();
         try {
-            dispatch(clearResetFormData())
+            dispatch(clearResetFormData());
         } catch (error: unknown) {
             setError(true);
             inputConfirmPassword?.current?.focus();
             showToast(getErrorMessage(error), "error");
+        } finally {
+            hideLoader();
         }
     };
 
@@ -73,7 +84,7 @@ const ResetPassword: React.FC = () => {
                         required
                         name="newPassword"
                         type="password"
-                        value={resetFormData.newPassword}
+                        value={resetPasswordFormData.newPassword}
                         label={t("new_passowrd")}
                         placeholder={t("enter_new_passowrd")}
                         onChange={(value) => handleChange(value, "newPassword")}
@@ -83,7 +94,7 @@ const ResetPassword: React.FC = () => {
                         name="confrimPassword"
                         type="password"
                         error={error}
-                        value={resetFormData.confirmPassword}
+                        value={resetPasswordFormData.confirmPassword}
                         inputRef={inputConfirmPassword}
                         label={t("confrim_password")}
                         placeholder={t("enter_confirm_password")}
