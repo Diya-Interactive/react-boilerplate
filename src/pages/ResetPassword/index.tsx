@@ -7,13 +7,13 @@ import InputField from "../../components/InputField";
 import logoDark from "../../assets/images/logo-dark.png";
 import logoLight from "../../assets/images/logo-light.png";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import { setResetFormData } from "../../features/authSlice";
+import { clearResetFormData, setResetFormData } from "../../features/authSlice";
+import { getErrorMessage } from "../../utils/globalFunctions";
 
 const ResetPassword: React.FC = () => {
     const { t } = useTranslation();
     const [error, setError] = useState<boolean>(false);
 
-    const inputNewPassword = useRef<HTMLInputElement>(null);
     const inputConfirmPassword = useRef<HTMLInputElement>(null);
 
     const { resetFormData } = useAppSelector((state) => state.login);
@@ -36,7 +36,15 @@ const ResetPassword: React.FC = () => {
         ) {
             setError(true);
             showToast("Passwords do not match", "error");
+            inputConfirmPassword?.current?.focus();
             return;
+        }
+        try {
+            dispatch(clearResetFormData())
+        } catch (error: unknown) {
+            setError(true);
+            inputConfirmPassword?.current?.focus();
+            showToast(getErrorMessage(error), "error");
         }
     };
 
@@ -66,7 +74,6 @@ const ResetPassword: React.FC = () => {
                         name="newPassword"
                         type="password"
                         value={resetFormData.newPassword}
-                        inputRef={inputNewPassword}
                         label={t("new_passowrd")}
                         placeholder={t("enter_new_passowrd")}
                         onChange={(value) => handleChange(value, "newPassword")}
