@@ -51,7 +51,7 @@ const ForgottenPassword: React.FC = () => {
     };
 
     return (
-        <>
+        <div className="mt-20 sm:mt-32 bg-white dark:bg-gray-800 shadow-xl rounded-xl p-6 sm:p-8 w-full max-w-md space-y-6">
             <div className="flex flex-col">
                 <img
                     src={logoDark}
@@ -86,6 +86,7 @@ const ForgottenPassword: React.FC = () => {
                         <button
                             type="button"
                             className="w-full sm:w-auto py-2 px-4 bg-gray-300 dark:bg-gray-700  hover:bg-gray-400 dark:hover:bg-gray-600 text-black dark:text-white font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400  transition disabled:opacity-50"
+                            onClick={() => navigate(-1)}
                         >
                             {t("cancel")}
                         </button>
@@ -98,7 +99,7 @@ const ForgottenPassword: React.FC = () => {
                     </div>
                 </form>
             </div>
-        </>
+        </div>
     );
 };
 
