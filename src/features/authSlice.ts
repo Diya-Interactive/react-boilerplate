@@ -6,7 +6,10 @@ interface AuthState {
         email: string;
         password: string;
     };
-    resetFormData: {
+    forgottenPasswordFormData: {
+        email: string;
+    };
+    resetPasswordFormData: {
         newPassword: string;
         confirmPassword: string;
     };
@@ -18,7 +21,10 @@ const initialState: AuthState = {
         email: "",
         password: "",
     },
-    resetFormData: {
+    forgottenPasswordFormData: {
+        email: "",
+    },
+    resetPasswordFormData: {
         newPassword: "",
         confirmPassword: "",
     },
@@ -60,10 +66,17 @@ const AuthSlice = createSlice({
                 [key]: value,
             };
         },
+        setForgottenPasswordFormData: (state, action) => {
+            const { key, value } = action.payload;
+            state.forgottenPasswordFormData = {
+                ...state?.forgottenPasswordFormData,
+                [key]: value,
+            };
+        },
         setResetFormData: (state, action) => {
             const { key, value } = action.payload;
-            state.resetFormData = {
-                ...state?.resetFormData,
+            state.resetPasswordFormData = {
+                ...state?.resetPasswordFormData,
                 [key]: value,
             };
         },
@@ -77,8 +90,27 @@ const AuthSlice = createSlice({
             };
             state.otp = new Array(6).fill("");
         },
+        clearResetFormData: (state) => {
+            state.resetPasswordFormData = {
+                newPassword: "",
+                confirmPassword: "",
+            };
+        },
+        clearForgottenPasswordFormData: (state) => {
+            state.forgottenPasswordFormData = {
+                email: "",
+            };
+        },
     },
 });
 
-export const { setFormData, setResetFormData, setOTPCode, clearFormData } = AuthSlice.actions;
+export const {
+    setFormData,
+    setResetFormData,
+    setForgottenPasswordFormData,
+    setOTPCode,
+    clearFormData,
+    clearResetFormData,
+    clearForgottenPasswordFormData
+} = AuthSlice.actions;
 export default AuthSlice.reducer;

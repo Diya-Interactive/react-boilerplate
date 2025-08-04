@@ -5,12 +5,15 @@ import { useNavigate } from "react-router-dom";
 import React, { useRef, useState } from "react";
 import { useToast } from "../../hooks/useToast";
 import InputField from "../../components/InputField";
-import { setFormData } from "../../features/authSlice";
 import { forgotPassword } from "../../services/api/auth";
 import logoDark from "../../assets/images/logo-dark.png";
 import logoLight from "../../assets/images/logo-light.png";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { getErrorMessage } from "../../utils/globalFunctions";
+import {
+    setForgottenPasswordFormData,
+    clearForgottenPasswordFormData,
+} from "../../features/authSlice";
 
 const ForgottenPassword: React.FC = () => {
     const { t } = useTranslation();
@@ -21,10 +24,10 @@ const ForgottenPassword: React.FC = () => {
     const { showToast } = useToast();
     const { showLoader, hideLoader } = useLoader();
     const inputEmailRef = useRef<HTMLInputElement>(null);
-    const { formData } = useAppSelector((state) => state.login);
+    const { forgottenPasswordFormData } = useAppSelector((state) => state.login);
 
     const handleChange = (value: string, name: string) => {
-        dispatch(setFormData({ key: name, value }));
+        dispatch(setForgottenPasswordFormData({ key: name, value }));
     };
 
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -32,13 +35,16 @@ const ForgottenPassword: React.FC = () => {
         try {
             showLoader();
             setErrorFlag(false);
-            const response = await forgotPassword({ email: formData?.email });
+            const response = await forgotPassword({
+                email: forgottenPasswordFormData?.email,
+            });
             if (response?.status === 200 && response?.data?.success) {
-                navigate("/reset-password");
                 showToast(
                     t("a_one_time_password_otp_has_been_sent_to_your_registered_email"),
                     "success"
                 );
+                navigate("/reset-password");
+                dispatch(clearForgottenPasswordFormData());
             }
         } catch (error: unknown) {
             setErrorFlag(true);
@@ -76,7 +82,7 @@ const ForgottenPassword: React.FC = () => {
                         name="email"
                         type="email"
                         error={errorFlag}
-                        value={formData.email}
+                        value={forgottenPasswordFormData.email}
                         inputRef={inputEmailRef}
                         label={t("email_address")}
                         placeholder={t("enter_email")}
