@@ -2,6 +2,7 @@ import "./App.css";
 import React from "react";
 import Login from "./pages/Login";
 import { Provider } from "react-redux";
+import Register from "./pages/Register";
 import Layout from "./components/Layout";
 import Dashboard from "./pages/Dashboard";
 import LoaderProvider from "./context/Loader";
@@ -10,13 +11,12 @@ import PublicRoute from "./routes/PublicRoute";
 import { ToastProvider } from "./context/Toast";
 import { UserProvider } from "./context/UserRole";
 import ResetPassword from "./pages/ResetPassword";
+import PublicLayout from "./components/PublicLayout";
 import { ErrorBoundary } from "react-error-boundary";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import ErrorFallback from "./components/ErrorFallback";
 import ForgottenPassword from "./pages/ForgottenPassword";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import Register from "./pages/Register";
-import PublicLayout from "./components/PublicLayout";
 
 const App: React.FC = () => {
   return (
