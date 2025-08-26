@@ -4,20 +4,23 @@ import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 
 const Layout: React.FC = () => {
+    const [isSidebarVisible] = useState(false);
     const [collapsed, setCollapsed] = useState(false);
 
     return (
-        <div className="flex h-screen bg-[#DCDCDA] dark:bg-gray-600">
-            {/* Sidebar (Hidden on mobile) */}
-            <div className="h-full bg-white dark:bg-gray-800 shadow-md hidden lg:block">
-                <Sidebar collapsed={collapsed} />
-            </div>
+         <div className="flex h-screen bg-[#DCDCDA] dark:bg-gray-400">
+            {/* Sidebar (conditionally rendered, hidden on mobile) */}
+            {isSidebarVisible && (
+                <div className="h-full bg-white dark:bg-gray-800 shadow-md hidden lg:block">
+                    <Sidebar collapsed={collapsed} />
+                </div>
+            )}
 
             {/* Main Content Area */}
             <div className="flex flex-col flex-1">
                 <div className="h-16 w-full sticky top-0 z-50 bg-white dark:bg-gray-700 shadow">
                     <Header
-                        isSidebarVisible={true}
+                        isSidebarVisible={isSidebarVisible}
                         toggleSidebar={() => setCollapsed((prev) => !prev)}
                     />
                 </div>
@@ -26,7 +29,7 @@ const Layout: React.FC = () => {
                     <Outlet />
                 </div>
             </div>
-        </div>
+            </div>
     );
 };
 
