@@ -98,42 +98,48 @@ export async function getGoogleErrorMessage(error: unknown): Promise<string> {
 }
 
 export const validateFormData = (
-    formData: LoginFormData
+    formData: Partial<LoginFormData>
 ): {
     isValid: boolean;
     errors: LoginFormErrors;
     messages: LoginFormMessages;
     firstInvalidField?: keyof LoginFormErrors;
 } => {
-    const { email, password } = formData;
+    const { fullName, email, password } = formData;
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    const isEmailValid = emailRegex.test(email || "");
-    const isPasswordValid = Boolean(password?.length);
-
     const errors: LoginFormErrors = {
-        email: !isEmailValid,
-        password: !isPasswordValid,
+        fullName: fullName !== undefined ? !fullName.trim() : false,
+        email: email !== undefined ? !(Boolean(email.trim()) && emailRegex.test(email)) : false,
+        password: password !== undefined ? !password.trim() : false,
     };
 
     const messages: LoginFormMessages = {};
     let firstInvalidField: keyof LoginFormErrors | undefined;
 
-    if (!isEmailValid) {
-        messages.email = "Please enter a valid email address";
-        firstInvalidField = "email";
+    if (fullName !== undefined && errors.fullName) {
+        messages.fullName = "Please enter your full name";
+        if (!firstInvalidField) firstInvalidField = "fullName";
     }
 
-    if (!isPasswordValid) {
+    if (email !== undefined && errors.email) {
+        messages.email = "Please enter a valid email address";
+        if (!firstInvalidField) firstInvalidField = "email";
+    }
+
+    if (password !== undefined && errors.password) {
         messages.password = "Please enter a password";
         if (!firstInvalidField) firstInvalidField = "password";
     }
 
+    const isValid = !errors.fullName && !errors.email && !errors.password;
+
     return {
-        isValid: isEmailValid && isPasswordValid,
+        isValid,
         errors,
         messages,
         firstInvalidField,
     };
 };
+
