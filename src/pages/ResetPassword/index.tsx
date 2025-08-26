@@ -1,15 +1,15 @@
-import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
+import useLoader from "../../hooks/useLoader";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "../../hooks/useToast";
+import React, { useRef, useState } from "react";
 import InputField from "../../components/InputField";
 import logoDark from "../../assets/images/logo-dark.png";
 import logoLight from "../../assets/images/logo-light.png";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import { clearResetFormData, setResetFormData } from "../../features/authSlice";
 import { getErrorMessage } from "../../utils/globalFunctions";
-import useLoader from "../../hooks/useLoader";
+import { clearResetFormData, setResetFormData } from "../../features/authSlice";
 
 const ResetPassword: React.FC = () => {
     const { t } = useTranslation();

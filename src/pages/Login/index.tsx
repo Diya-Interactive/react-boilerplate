@@ -90,7 +90,7 @@ const Login: React.FC = () => {
 
     if (!isValid) {
       if (firstInvalidField === "email") inputEmailRef.current?.focus();
-      if (firstInvalidField === "password") inputPasswordRef.current?.focus();
+      else if (firstInvalidField === "password") inputPasswordRef.current?.focus();
       return false;
     }
 

@@ -18,6 +18,8 @@ import {
 const ForgottenPassword: React.FC = () => {
     const { t } = useTranslation();
     const [errorFlag, setErrorFlag] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string>("");
+
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -32,6 +34,12 @@ const ForgottenPassword: React.FC = () => {
 
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if(forgottenPasswordFormData?.email === "") {
+                        setErrorFlag(true);
+            inputEmailRef?.current?.focus();
+            setErrorMessage("Please enter a valid email address");
+            return true;
+        }
         try {
             showLoader();
             setErrorFlag(false);
@@ -82,10 +90,11 @@ const ForgottenPassword: React.FC = () => {
                         name="email"
                         type="email"
                         error={errorFlag}
-                        value={forgottenPasswordFormData.email}
                         inputRef={inputEmailRef}
                         label={t("email_address")}
+                        errorMessage={errorMessage}
                         placeholder={t("enter_email")}
+                        value={forgottenPasswordFormData.email}
                         onChange={(value) => handleChange(value, "email")}
                     />
                     <div className="flex justify-end gap-4">
