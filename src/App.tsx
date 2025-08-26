@@ -75,6 +75,7 @@ const App: React.FC = () => {
                 >
                   <Route index element={<Navigate to="dashboard" replace />} />
                   <Route path="dashboard" element={<Dashboard />} />
+                  <Route path="users" element={<Dashboard />} />
                 </Route>
               </Routes>
             </BrowserRouter>
