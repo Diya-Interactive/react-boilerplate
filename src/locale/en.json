@@ -29,5 +29,13 @@
     "confrim_password": "Confirm password",
     "enter_confirm_password": "Enter confirm password",
     "create_new_password": "Create new password",
-    "enter_new_password_to_update_your_account": "Enter new password to update your account."
+    "enter_new_password_to_update_your_account": "Enter new password to update your account.",
+    "full_name": "Full name",
+    "enter_full_name": "Enter full name",
+    "log_in": "Log in",
+    "register_agreement": "By signing up, you agree to our",
+    "temrs": "Terms",
+    "privacy_policy": "Privacy policy",
+    "cookies_policy": "Cookies Policy",
+    "have_an_account": "Have an account?"
 }
