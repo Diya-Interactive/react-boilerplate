@@ -13,6 +13,11 @@ interface AuthState {
         newPassword: string;
         confirmPassword: string;
     };
+    registerFormData: {
+        fullName: string;
+        email: string;
+        password: string;
+    };
     otp: string[];
 }
 
@@ -27,6 +32,11 @@ const initialState: AuthState = {
     resetPasswordFormData: {
         newPassword: "",
         confirmPassword: "",
+    },
+    registerFormData: {
+        fullName: "",
+        email: "",
+        password: "",
     },
     otp: new Array(6).fill(""),
 };
@@ -80,6 +90,13 @@ const AuthSlice = createSlice({
                 [key]: value,
             };
         },
+        setRegisterFormData: (state, action) => {
+            const { key, value } = action.payload;
+            state.registerFormData = {
+                ...state?.registerFormData,
+                [key]: value,
+            };
+        },
         setOTPCode: (state, action) => {
             state.otp = action.payload;
         },
@@ -101,16 +118,25 @@ const AuthSlice = createSlice({
                 email: "",
             };
         },
+        clearRegisterFormData: (state) => {
+            state.registerFormData = {
+                fullName: "",
+                email: "",
+                password: ""
+            }
+        }
     },
 });
 
 export const {
     setFormData,
     setResetFormData,
+    setRegisterFormData,
     setForgottenPasswordFormData,
     setOTPCode,
     clearFormData,
     clearResetFormData,
-    clearForgottenPasswordFormData
+    clearForgottenPasswordFormData,
+    clearRegisterFormData
 } = AuthSlice.actions;
 export default AuthSlice.reducer;
