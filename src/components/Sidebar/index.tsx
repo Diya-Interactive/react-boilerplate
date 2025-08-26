@@ -26,7 +26,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
 
     return (
         <aside
-            className={`flex flex-col h-screen transition-all duration-300 border-r shadow-md ${collapsed ? "w-20" : "w-64"
+            className={`flex flex-col h-screen transition-all duration-300 shadow-md ${collapsed ? "w-20" : "w-64"
                 } bg-white dark:bg-gray-900 dark:border-gray-800`}
         >
             {/* Top Section: Logo + Toggle */}
