@@ -8,7 +8,6 @@ const PublicLayout: React.FC = () => (
             <ThemeToggle />
             {/* LanguageSelector if needed */}
         </header>
-
         <Outlet />
     </div>
 );
