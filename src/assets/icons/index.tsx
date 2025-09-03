@@ -2,6 +2,7 @@ export { default as Sun } from "./Sun";
 export { default as Moon } from "./Moon";
 export { default as User } from "./User";
 export { default as Bars } from "./Bars";
+export { default as Lock } from "./Lock";
 export { default as Close } from "./Close";
 export { default as Logout } from "./Logout";
 export { default as Google } from "./Google";

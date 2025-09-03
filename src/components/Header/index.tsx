@@ -1,5 +1,5 @@
 import ThemeToggle from "../ThemeToggle";
-import { useUser } from "../../hooks/useUse";
+import { useUser } from "../../hooks/useUser";
 import { useTranslation } from "react-i18next";
 import { allLinks } from "../../constants/menu";
 import type { HeaderProps } from "../../types/header";
